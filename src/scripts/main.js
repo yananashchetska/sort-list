@@ -24,7 +24,7 @@ let liList = Array.from(document.getElementsByTagName('li'));
 console.log('li list: ', liList);
 
 const employees = makeEmployesList(liList);
-const unsortedEmpl = [...employees];
+let unsortedEmpl = [...employees];
 
 console.log('employees: ', sortList(employees));
 
@@ -34,27 +34,59 @@ const showSalaryBtn = document.querySelector('.buttons__button--show');
 let isSalaryVisible = false;
 
 const showSalary = (unsortedEmpl) => {
-  for (let i = 0; i < liList.length; i++) {
-   liList[i].textContent = `${unsortedEmpl[i].name}:  ${unsortedEmpl[i].salary}`;
-  }
+  liList.forEach((li, i) => {
+    li.textContent = `${unsortedEmpl[i].name}: ${unsortedEmpl[i].salary}`;
+  });
 };
 
 const hideSalary = (unsortedEmpl) => {
-  for (let i = 0; i < unsortedEmpl.length; i++) {
-    liList[i].textContent = unsortedEmpl[i].name;
-  }
+  liList.forEach((li, i) => {
+    li.textContent = unsortedEmpl[i].name;
+  });
 };
 
-showSalaryBtn.addEventListener('click',  () => {
-  isSalaryVisible = !isSalaryVisible;
+// sort button functionality:
 
-  if(isSalaryVisible) {
-    showSalary(unsortedEmpl);
-    showSalaryBtn.textContent = 'Hide Salary';
+const sortSalaryBtn = document.querySelector('.buttons__button--sort');
 
-  } else {
-    hideSalary(unsortedEmpl);
-    showSalaryBtn.textContent = 'Show Salary';
+const unsortedEmplCopy = [...unsortedEmpl];
+const buttonsControler = document.querySelector('.buttons');
+
+let isSorted = false;
+let isShown = false;
+
+const unSortList = (list, oldList) => {
+  list = [...oldList];
+}
+buttonsControler.addEventListener('click', (ev) => {
+
+  if (ev.target === showSalaryBtn) {
+    isShown = !isShown;
   }
-});
 
+  if (ev.target === sortSalaryBtn) {
+    isSorted = !isSorted;
+  }
+
+  if (!isShown) {
+    hideSalary(unsortedEmpl);
+    showSalaryBtn.textContent = 'Show salary';
+  }
+
+  if (isShown) {
+    showSalary(unsortedEmpl);
+    showSalaryBtn.textContent = 'Hide salary';
+  }
+  
+    if (isSorted) {
+      unsortedEmpl = [...employees];
+      sortSalaryBtn.textContent = 'Sort by salary';
+
+    }
+    
+    if (!isSorted) {
+    unsortedEmpl = [...unsortedEmplCopy];
+    sortSalaryBtn.textContent = 'Unsort by salary';
+  }
+
+});

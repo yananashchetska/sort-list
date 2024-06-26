@@ -156,14 +156,14 @@ console.log('employees: ', sortList(employees));
 var showSalaryBtn = document.querySelector('.buttons__button--show');
 var isSalaryVisible = false;
 var showSalary = function showSalary(unsortedEmpl) {
-  for (var i = 0; i < liList.length; i++) {
-    liList[i].textContent = "".concat(unsortedEmpl[i].name, ":  ").concat(unsortedEmpl[i].salary);
-  }
+  liList.forEach(function (li, i) {
+    li.textContent = "".concat(unsortedEmpl[i].name, ": ").concat(unsortedEmpl[i].salary);
+  });
 };
 var hideSalary = function hideSalary(unsortedEmpl) {
-  for (var i = 0; i < unsortedEmpl.length; i++) {
-    liList[i].textContent = unsortedEmpl[i].name;
-  }
+  liList.forEach(function (li, i) {
+    li.textContent = unsortedEmpl[i].name;
+  });
 };
 showSalaryBtn.addEventListener('click', function () {
   isSalaryVisible = !isSalaryVisible;
@@ -200,7 +200,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53725" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56105" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
