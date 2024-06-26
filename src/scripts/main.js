@@ -45,48 +45,49 @@ const hideSalary = (unsortedEmpl) => {
   });
 };
 
+//
+// Function to update the HTML list
+const updateList = (list) => {
+  liList.forEach((li, i) => {
+    li.textContent = list[i].name + (isSalaryVisible ? `: ${list[i].salary}` : '');
+  });
+};
+
 // sort button functionality:
 
 const sortSalaryBtn = document.querySelector('.buttons__button--sort');
-
 const unsortedEmplCopy = [...unsortedEmpl];
 const buttonsControler = document.querySelector('.buttons');
 
 let isSorted = false;
-let isShown = false;
+// let isShown = false;
 
-const unSortList = (list, oldList) => {
-  list = [...oldList];
-}
 buttonsControler.addEventListener('click', (ev) => {
 
   if (ev.target === showSalaryBtn) {
-    isShown = !isShown;
+    isSalaryVisible = !isSalaryVisible;
+
+    if (isSalaryVisible) {
+      showSalary(unsortedEmpl);
+      showSalaryBtn.textContent = 'Hide salary';
+    } else {
+      hideSalary(unsortedEmpl);
+      showSalaryBtn.textContent = 'Show salary';
+    }
   }
 
   if (ev.target === sortSalaryBtn) {
     isSorted = !isSorted;
-  }
 
-  if (!isShown) {
-    hideSalary(unsortedEmpl);
-    showSalaryBtn.textContent = 'Show salary';
-  }
-
-  if (isShown) {
-    showSalary(unsortedEmpl);
-    showSalaryBtn.textContent = 'Hide salary';
-  }
-  
     if (isSorted) {
-      unsortedEmpl = [...employees];
+      unsortedEmpl = sortList([...unsortedEmpl]);
+      sortSalaryBtn.textContent = 'Unsort list';
+    } else {
+      unsortedEmpl = [...unsortedEmplCopy];
       sortSalaryBtn.textContent = 'Sort by salary';
-
     }
-    
-    if (!isSorted) {
-    unsortedEmpl = [...unsortedEmplCopy];
-    sortSalaryBtn.textContent = 'Unsort by salary';
+
+    updateList(unsortedEmpl);
   }
 
 });

@@ -165,14 +165,44 @@ var hideSalary = function hideSalary(unsortedEmpl) {
     li.textContent = unsortedEmpl[i].name;
   });
 };
-showSalaryBtn.addEventListener('click', function () {
-  isSalaryVisible = !isSalaryVisible;
-  if (isSalaryVisible) {
-    showSalary(unsortedEmpl);
-    showSalaryBtn.textContent = 'Hide Salary';
-  } else {
-    hideSalary(unsortedEmpl);
-    showSalaryBtn.textContent = 'Show Salary';
+
+//
+// Function to update the HTML list
+var updateList = function updateList(list) {
+  liList.forEach(function (li, i) {
+    li.textContent = list[i].name + (isSalaryVisible ? ": ".concat(list[i].salary) : '');
+  });
+};
+
+// sort button functionality:
+
+var sortSalaryBtn = document.querySelector('.buttons__button--sort');
+var unsortedEmplCopy = _toConsumableArray(unsortedEmpl);
+var buttonsControler = document.querySelector('.buttons');
+var isSorted = false;
+// let isShown = false;
+
+buttonsControler.addEventListener('click', function (ev) {
+  if (ev.target === showSalaryBtn) {
+    isSalaryVisible = !isSalaryVisible;
+    if (isSalaryVisible) {
+      showSalary(unsortedEmpl);
+      showSalaryBtn.textContent = 'Hide salary';
+    } else {
+      hideSalary(unsortedEmpl);
+      showSalaryBtn.textContent = 'Show salary';
+    }
+  }
+  if (ev.target === sortSalaryBtn) {
+    isSorted = !isSorted;
+    if (isSorted) {
+      unsortedEmpl = sortList(_toConsumableArray(unsortedEmpl));
+      sortSalaryBtn.textContent = 'Unsort list';
+    } else {
+      unsortedEmpl = _toConsumableArray(unsortedEmplCopy);
+      sortSalaryBtn.textContent = 'Sort by salary';
+    }
+    updateList(unsortedEmpl);
   }
 });
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -200,7 +230,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56105" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50625" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
